@@ -2,15 +2,13 @@
 // @name         Tokopedia Cetak Sekaligus
 // @author       Rendi Wahyudi Muliawan (Celleven Store)
 // @namespace    http://www.tokopedia.com/celleven
-// @version      0.02
+// @version      0.01
 // @description  Untuk mencetak label alamat pada Tokopedia bagi pengguna Non / Bukan Gold Merchant.
 // @match        https://www.tokopedia.com/myshop_order_process.pl
 // @match        https://tokopedia.com/myshop_order_process.pl
 // @include      https://www.tokopedia.com/myshop_order_process.pl
 // @include      https://tokopedia.com/myshop_order_process.pl
 // @require      https://code.jquery.com/jquery-3.3.1.min.js
-// @updateURL    https://github.com/rendy1287/tokopedia-cetak-sekaligus/raw/master/tokopedia.user.js
-// @downloadURL  https://github.com/rendy1287/tokopedia-cetak-sekaligus/raw/master/tokopedia.user.js
 // @run-at       document-end
 // ==/UserScript==
 
