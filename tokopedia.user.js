@@ -2,15 +2,33 @@
 // @name         Tokopedia Cetak Sekaligus
 // @author       Rendi Wahyudi Muliawan (Celleven Store)
 // @namespace    http://www.tokopedia.com/celleven
+// @source       https://github.com/rendy1287/tokopedia-cetak-sekaligus
 // @version      0.01
 // @description  Untuk mencetak label alamat pada Tokopedia bagi pengguna Non / Bukan Gold Merchant.
-// @match        https://www.tokopedia.com/myshop_order_process.pl
-// @match        https://tokopedia.com/myshop_order_process.pl
-// @include      https://www.tokopedia.com/myshop_order_process.pl
-// @include      https://tokopedia.com/myshop_order_process.pl
+// @license      Anda diperbolehkan menyalin dan mengedit script ini, tapi mohon cantumkan author dan website kami.
+// @match        https://www.tokopedia.com/myshop_order_process.pl*
+// @match        https://tokopedia.com/myshop_order_process.pl*
+// @include      https://www.tokopedia.com/myshop_order_process.pl*
+// @include      https://tokopedia.com/myshop_order_process.pl*
 // @require      https://code.jquery.com/jquery-3.3.1.min.js
 // @run-at       document-end
 // ==/UserScript==
+
+//***************** PERHATIAN **************************************//
+//
+// Mohon mempergunakan script ini dengan baik, script ini diguna-
+// kan bagi Anda yang masih mau memulai jualan lewat Tokopedia,
+// toko baru, dan masih belajar berjualan.
+// Tidak disarankan bagi yang sudah badge Gold 1 ke atas untuk
+// menggunakan script ini, mohon untuk mendukung Tokopedia juga
+// dengan berlangganan Gold Merchant.
+// Tokopedia sangat bergantung dengan Gold Merchant Anda-anda se-
+// kalian untuk kelangsungan hidup perusahaan kedepannya.
+// Tokopedia maju juga dengan bantuan pembeli dan penjual, tidak
+// ada pembeli dan penjual maka Tokopedia tidak ada seperti
+// sekarang.
+//
+//******************************************************************//
 
 //***************** PENGATURAN *************************************//
 //
@@ -35,9 +53,78 @@ var fontsize = '15px';
 
 //*****************************************************************//
 
+var btncetak, cetak, radio = [];
+
 (function() {
     'use strict';
 
-	alert($('input.customer_name')); // tes
+    // cek apakah sudah klik tombol Cetak Sekaligus?
+    cetak = get_query_string().print;
+
+    if (cetak == '1')
+    {
+        cetak_alamat();
+    }
+    else
+    {
+        cetak_button();
+    }
+
 
 })();
+
+// fungsi ini menampilkan label cetak alamat
+function cetak_alamat()
+{
+    $('html').empty();
+    $('html').html('<head><title>Judul</title></head><body>Di sini untuk mencetak alamat</body>');
+
+    console.log('cetak');
+
+}
+
+// fungsi ini menampilkan tombol Cetak Sekaligus pada halaman konfirmasi pemesanan
+function cetak_button()
+{
+    btncetak  = '<style>button.t-c-s{background-color: #3a87ad; border: 1px solid #3a87ad; color: white;}' +
+                'button.t-c-s:hover{background-color: #3a679d; border: 1px solid #3a679d; color: white;}</style>' +
+                '<button class="btn btn-small mr-5 t-c-s">' +
+                '<i class="icon-fax-alt"></i> Cetak Sekaligus</button>';
+
+    $(btncetak).insertAfter('button.confirm-multiple');
+
+    $('button.t-c-s').click(function()
+    {
+        var id = '';
+        $('input.order_checkbox').each(function ()
+        {
+            var checked = (this.checked ? $(this).val() : '');
+            if (checked != '') id += (id == '' ? checked : '-' + checked);
+        });
+
+        if (id == '')
+        {
+            var message_error = tokopedia.render_message('error', tokopedia.loc('ERROR_CHOOSE_ORDER'));
+            tokopedia.alert($(this).text(), message_error);
+            return false;
+        }
+
+        window.open('https://www.tokopedia.com/myshop_order_process.pl?print=1&id=' + id);
+    });
+}
+
+// Read a page's GET URL variables and return them as an associative array.
+function get_query_string()
+{
+    var vars = [], hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+
+    for(var i = 0; i < hashes.length; i++)
+    {
+        hash = hashes[i].split('=');
+        vars.push(hash[0]);
+        vars[hash[0]] = hash[1];
+    }
+
+    return vars;
+}
