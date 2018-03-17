@@ -1,6 +1,6 @@
-## Tokopedia Cetak Sekaligus Untuk Non Gold Member
+## Tokopedia Cetak Sekaligus Untuk Non Gold Merchant
 
-Tokopedia cetak / print sekaligus untuk **Non / Bukan Gold Member**\
+Tokopedia cetak / print sekaligus untuk **Non / Bukan Gold Merchant**\
 Berguna untuk kamu yang mau mencetak label alamat di Tokopedia tanpa harus berlangganan Gold Merchant.
 
 Plugin ini akan berjalan di browser kamu sebagai tambahan extension.
