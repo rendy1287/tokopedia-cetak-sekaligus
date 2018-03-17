@@ -10,9 +10,8 @@ Bagi pengguna Google Chrome silakan install [**Tampermonkey**](https://chrome.go
 Bagi pengguna Firefox silakan install [**Greasemonkey**](https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/)
 
 ## Cara Menggunakan
-Setelah menginstall Tampermonkey atau Greasemonkey, silakan install script\
-berikut di bawah ini. (versi stabil)
+Setelah menginstall Tampermonkey atau Greasemonkey, silakan install script\ berikut di bawah ini. (versi stabil)
 
-[Install Tokopedia Cetak Sekaligus](https://greasyfork.org/id/scripts/39660-tokopedia-cetak-sekaligus)
+[**Install Script Tokopedia Cetak Sekaligus**](https://greasyfork.org/id/scripts/39660-tokopedia-cetak-sekaligus)
 
-Jika ada warning, silakan klik Install.
+Jika ada warning, silakan klik Install saja.
