@@ -1,55 +1,58 @@
 let label = `
-    <div class="label_alamat">
-      <div class="label">
-        <div class="logo">
-          <img src="{{logotoko}}" width="115" height="25">
-        </div>
-        <div class="barcode"></div>
-        <div class="job" style="display: none;">{{kode_booking}}</div>
-        <div class="ekspedisi">
-          <div class="logokurir">
-            <img src="{{logokurir}}" width="80%">
-          </div>
-          <div class="kurir">{{ekspedisi}}</div>
-          <div class="invoice">Nomor Invoice<br>{{invoice}}</div>
-        </div>
-        <div class="adminongkir">
-          <div class="admin">Administrasi<br><span class="harga_admin">{{administrasi}}</span></div>
-          <div class="asuransi">Asuransi<br><span class="harga_asuransi">{{asuransi}}</span></div>
-          <div class="ongkir">Ongkir<br><span class="harga_ongkir">{{ongkir}}</span></div>
-          <div class="berat">Berat<br><span class="total_berat">{{berat}}</span><br></div>
-        </div>
-        <div class="penerima">
-          <div class="kepada">Kepada</div>
-          <div class="penerima2">
-            <div class="nama_penerima"><b>{{nama_penerima}}</b> - {{telepon_penerima}}</div>
-            <div class="alamat_penerima">{{alamat_penerima}}</div>
-          </div>
-        </div>
-        <div class="pengirim">
-          <div class="dari">Dari</div>
-          <div class="pengirim2">
-            <div class="nama_pengirim"><b>{{nama_pengirim}}</b> - {{telepon_pengirim}}</div>
-            <div class="alamat_pengirim">{{alamat_pengirim}}</div>
-          </div>
-        </div>
-        <div class="gunting">
-          <div class="icon_gunting">
-            <img src="https://ecs7.tokopedia.net/img/kurir/icon-cut.png" width="14">
-          </div>
-        </div>
-        {{foreach_item}}
-        <div class="item">
-          <div class="jumlah">{{jumlah_produk}}</div>
-          <div class="produk">
-            <div class="nama_produk">{{nama_produk}}</div>
-            <div class="keterangan">Keterangan: {{keterangan_produk}}</div>
-          </div>
-        </div>
-        {{endforeach_item}}
-        <div class="clear"></div>
+<div class="label_alamat">
+  <div class="label">
+    <div class="logo">
+      <img src="{{logotoko}}" width="115" height="25">
+    </div>
+    <div class="barcode"></div>
+    <div class="job" style="display: none;">{{kode_booking}}</div>
+    <div class="ekspedisi">
+      <div class="logokurir">
+        <img src="{{logokurir}}" width="80%">
+      </div>
+      <div class="kurir">{{ekspedisi}}</div>
+      <div class="invoice">Nomor Invoice<br>{{invoice}}</div>
+    </div>
+    <div class="adminongkir">
+      <div class="admin">Administrasi<br><span class="harga_admin">{{administrasi}}</span></div>
+      <div class="asuransi">Asuransi<br><span class="harga_asuransi">{{asuransi}}</span></div>
+      <div class="ongkir">Ongkir<br><span class="harga_ongkir">{{ongkir}}</span></div>
+      <div class="berat">Berat<br><span class="total_berat">{{berat}}</span><br></div>
+    </div>
+    <div class="penerima">
+      <div class="kepada">Kepada</div>
+      <div class="penerima2">
+        <div class="nama_penerima"><b>{{nama_penerima}}</b> - {{telepon_penerima}}</div>
+        <div class="alamat_penerima">{{alamat_penerima}}</div>
       </div>
     </div>
+    <div class="pengirim">
+      <div class="dari">Dari</div>
+      <div class="pengirim2">
+        <div class="nama_pengirim"><b>{{nama_pengirim}}</b> - {{telepon_pengirim}}</div>
+        <div class="alamat_pengirim">{{alamat_pengirim}}</div>
+      </div>
+    </div>
+    <div class="gunting">
+      <div class="icon_gunting">
+        <img src="https://ecs7.tokopedia.net/img/kurir/icon-cut.png" width="14">
+      </div>
+    </div>
+    {{foreach_item}}
+    <div class="clear"></div>
+  </div>
+</div>
+`;
+
+// foreach_item menggunakan template ini
+let item = `
+<div class="item">
+  <div class="jumlah">{{jumlah_produk}}</div>
+  <div class="produk">
+    <div class="nama_produk">{{nama_produk}}</div>
+    <div class="keterangan">Keterangan: {{keterangan_produk}}</div>
+  </div>
+</div>
 `;
 
 let css = `
