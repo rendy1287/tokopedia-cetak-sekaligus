@@ -14,4 +14,11 @@ Setelah menginstall Tampermonkey atau Greasemonkey, silakan install script\ beri
 
 [**Install Script Tokopedia Cetak Sekaligus**](https://greasyfork.org/id/scripts/39660-tokopedia-cetak-sekaligus)
 
-Jika ada warning, silakan klik Install saja.
+Setelah terinstall pada halaman **Konfirmasi Pembayaran** kamu akan\
+melihat tombol baru **Cetak Sekaligus** berwarna biru.
+
+![Cetak Sekaligus](https://github.com/rendy1287/tokopedia-cetak-sekaligus/gambar/raw/master/cetak.png)
+
+Bagi kamu yang berlangganan Gold Merchant tetap bisa menggunakan\
+extension ini, tombol Cetak Sekaligus akan muncul dua tombol\
+berwarna biru dan abu-abu (default-nya Tokopedia).
