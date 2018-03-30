@@ -14,7 +14,7 @@ Setelah menginstall Tampermonkey atau Greasemonkey, silakan install script\ beri
 
 [**Install Script Tokopedia Cetak Sekaligus**](https://greasyfork.org/en/scripts/39660-tokopedia-cetak-sekaligus-non-gold-merchant)
 
-Setelah terinstall pada halaman **Konfirmasi Pembayaran** kamu akan\
+Setelah terinstall pada halaman **Konfirmasi Pengiriman** kamu akan\
 melihat tombol baru **Cetak Sekaligus** berwarna biru.
 
 ![Cetak Sekaligus](https://raw.githubusercontent.com/rendy1287/tokopedia-cetak-sekaligus/master/gambar/cetak.png)
