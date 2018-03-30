@@ -12,12 +12,12 @@
 // @include      https://www.tokopedia.com/myshop_order_process.pl*
 // @include      https://tokopedia.com/myshop_order_process.pl*
 // @run-at       document-end
-// @require      https://github.com/rendy1287/tokopedia-cetak-sekaligus/raw/master/template/1.js
+// @require      https://raw.githubusercontent.com/rendy1287/tokopedia-cetak-sekaligus/master/template/1.js
 // ==/UserScript==
 //
 //***************** PENGATURAN *************************************//
 //
-// @logokamu      URL logo toko jika kamu ingin cantumkan logo
+// @logotoko      URL logo toko jika kamu ingin cantumkan logo
 //                isikan url image kamu, bisa upload ke image hosting
 //                logo recommended size: 115x25 pixel
 //
@@ -31,7 +31,7 @@
 //
 //******************************************************************//
 
-var logokamu  = 'http://www.domainkamu.com/logo.jpg';
+var logotoko  = 'http://www.domainkamu.com/logo.jpg';
 var ekspedisi = false;
 var invoice   = false;
 var fontsize  = '15px';
