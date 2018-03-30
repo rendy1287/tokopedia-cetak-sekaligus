@@ -12,7 +12,7 @@ Bagi pengguna Firefox silakan install [**Greasemonkey**](https://addons.mozilla.
 ## Cara Menggunakan
 Setelah menginstall Tampermonkey atau Greasemonkey, silakan install script\ berikut di bawah ini. (versi stabil)
 
-[**Install Script Tokopedia Cetak Sekaligus**](https://greasyfork.org/id/scripts/39660-tokopedia-cetak-sekaligus)
+[**Install Script Tokopedia Cetak Sekaligus**](https://greasyfork.org/en/scripts/39660-tokopedia-cetak-sekaligus-non-gold-merchant)
 
 Setelah terinstall pada halaman **Konfirmasi Pembayaran** kamu akan\
 melihat tombol baru **Cetak Sekaligus** berwarna biru.
