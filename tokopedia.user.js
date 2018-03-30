@@ -3,7 +3,7 @@
 // @author       Rendi Wahyudi Muliawan
 // @namespace    http://www.tokopedia.com/celleven
 // @source       https://github.com/rendy1287/tokopedia-cetak-sekaligus
-// @version      0.03
+// @version      0.04
 // @description  Untuk mencetak label alamat pada Tokopedia bagi pengguna Non / Bukan Gold Merchant.
 // @license      Anda diperbolehkan menyalin dan mengedit script ini, tapi mohon cantumkan author dan website kami.
 // @icon         https://ecs7.tokopedia.net/img/favicon.ico
@@ -12,7 +12,7 @@
 // @include      https://www.tokopedia.com/myshop_order_process.pl*
 // @include      https://tokopedia.com/myshop_order_process.pl*
 // @run-at       document-end
-// @require      https://raw.githubusercontent.com/rendy1287/tokopedia-cetak-sekaligus/master/template/1.js
+// @require      https://github.com/rendy1287/tokopedia-cetak-sekaligus/raw/master/template/1.js
 // ==/UserScript==
 //
 //***************** PENGATURAN *************************************//
@@ -31,10 +31,10 @@
 //
 //******************************************************************//
 
-var logotoko  = 'http://www.domainkamu.com/logo.jpg';
-var ekspedisi = false;
-var invoice   = false;
-var fontsize  = '15px';
+const logotoko  = 'https://ecs7.tokopedia.net/img/logo-tokopedia-32.png';
+const ekspedisi = false;
+const invoice   = false;
+const fontsize  = '12px';
 
 // Template Label bisa kamu ganti pada @require di atas
 // Template Label saat ini hanya tersedia 1 sampai 3
@@ -49,8 +49,6 @@ var fontsize  = '15px';
 //
 //*****************************************************************//
 
-var html = '<div class="cetak_sekaligus"></div>';
-
 (function() {
     'use strict';
 
@@ -61,26 +59,21 @@ var html = '<div class="cetak_sekaligus"></div>';
 
     $(btncetak).insertAfter('button.confirm-multiple');
 
-    $(html).insertBefore('footer.footer-wrapper');
-
-    $(document).on('change', 'input.order_checkbox', function() {
-        set_print_label($(this));
-    });
-
-    $(document).on('change', 'input.checkall', function() {
-        $('input.order_checkbox').each(function ()
-        {
-            set_print_label($(this));
-        });
-    });
-
     $('button.t-c-s').click(function()
     {
+        var html = '';
         var id = '';
+        var labelid = [];
+
         $('input.order_checkbox').each(function ()
         {
             var checked = (this.checked ? $(this).val() : '');
-            if (checked != '') id += (id == '' ? checked : '-' + checked);
+            id += checked;
+
+            if (checked != '')
+            {
+                labelid.push($(this).parent().parent().prop('id').replace('order-', ''));
+            }
         });
 
         if (id == '')
@@ -90,63 +83,164 @@ var html = '<div class="cetak_sekaligus"></div>';
             return false;
         }
 
+        html += '<title>Cetak Slip Alamat</title>';
+        html += css;
+        html += '<div class="print"><a href="javascript:window.print();"><img src="https://ecs7.tokopedia.net/img/print.png"> Cetak</a></div><div class="print_area">';
+
+        var kanan = false;
+        var x = 0;
+
+        labelid.forEach(function (a, i)
+        {
+            if (x == 0)
+            {
+                html += '<div class="kiri">';
+            }
+            else if (x == 3 && kanan == false)
+            {
+                html += '<div class="kanan">';
+                kanan = true;
+                x = 0;
+            }
+            else if (x == 3 && kanan == true)
+            {
+                html += '<div class="kiri">';
+                kanan = false;
+                x = 0;
+            }
+
+            html += set_print_label(a);
+
+            x++;
+            if (x == 3)
+            {
+                html += '</div>';
+            }
+        });
+
+        html += '</div></div>';
+
+        $('<div class="cetak_sekaligus"></div>').insertBefore('footer.footer-wrapper');
+        $(html).append('div.cetak_sekaligus');
+
         var blank = window.open('about:blank', '_blank');
         blank.document.write(html);
     });
 
 })();
 
-function set_print_label(element)
+function set_print_label(id)
 {
-    var id = element.val();
+    var text             = '';
+    var logokurir        = 'https://ecs7.tokopedia.net/img/kurir/logo_jne.png';
 
-    var nama_toko = $('div.top-admin').find('a.break-word').val();
+    var nama_toko        = $('a.break-word').html();
+    var nama_penerima    = $('tr#order-' + id + ' td input.dest_receiver_name').val();
+    var alamat_penerima  = $('tr#order-' + id + ' td input.dest_address').val();
+    var telepon_penerima = /[0-9]{10,}/.exec(alamat_penerima);
+        alamat_penerima  = alamat_penerima.replace(/Telp.*/, '');
+    var ekspedisi        = $('tr#order-' + id + ' td input.ship_shipping_name').val();
+    var kode_ekspedisi   = ekspedisi.substr(0, ekspedisi.indexOf(' '));
+        ekspedisi        = '<b>' + ekspedisi.substr(0, ekspedisi.indexOf(' ')) + '</b><br>' + ekspedisi.substr(ekspedisi.indexOf(' ')+1);
+        ekspedisi        = ekspedisi.replace('(', '').replace(')', '');
+    var ongkir           = $('tr#order-' + id + ' td input.ship_shipping_price').val();
+    var nama_pengirim    = ($('tr#order-' + id + ' td input.dropship_name').val() ? '-' : nama_toko);
+    var telepon_pengirim = ($('tr#order-' + id + ' td input.dropship_telp').val() ? '' : $('tr#order-' + id + ' td input.shop_phone').val());
+    var alamat_pengirim  = $('tr#order-' + id + ' td input.shop_district').val() + ', ' +
+                           $('tr#order-' + id + ' td input.shop_province').val() + ', ' + $('tr#order-' + id + ' td input.shop_postal').val();
+    var invoice          = $('tr#order-' + id + ' td input.order_invoice').val();
+    var administrasi     = '';
+    var asuransi         = $('tr#order-' + id + ' td input.order_add_price').val();
+    var logo_asuransi    = '';
+    var berat            = /\(.*\)/.exec($('tr#order-' + id + ' td input.order_product_qty').val());
+        berat            = berat.toString().replace('(', '').replace(')', '');
+    var total_harga      = $('tr#order-' + id + ' td input.order_open_amt').val();
+    var tipe_pembayaran  = $('tr#order-' + id + ' td input.pay_payment_method').val();
+    var kode_booking     = '';
 
-    console.log(nama_toko);
+    if (kode_ekspedisi == 'JNE')
+    {
+        logokurir    = 'https://ecs7.tokopedia.net/img/kurir/logo_jne.png';
+    }
+    else if  (kode_ekspedisi == 'SiCepat')
+    {
+        logokurir    = 'https://ecs7.tokopedia.net/img/kurir/logo_sicepat.png';
+    }
+    else if  (kode_ekspedisi == 'J&T')
+    {
+        logokurir    = 'https://ecs7.tokopedia.net/img/kurir/logo_jnt.png';
+    }
+    else if  (kode_ekspedisi == 'Grab')
+    {
+        logokurir    = 'https://ecs7.tokopedia.net/img/kurir/logo_grab.png';
+    }
+    else if  (kode_ekspedisi == 'Go-Send')
+    {
+        logokurir    = 'https://ecs7.tokopedia.net/img/kurir/logo_gosend.png';
+    }
+    else if  (kode_ekspedisi == 'Ninja')
+    {
+        logokurir    = 'https://ecs7.tokopedia.net/img/kurir/logo_ninja.png';
+    }
+    else if  (kode_ekspedisi == 'Wahana')
+    {
+        logokurir    = 'https://ecs7.tokopedia.net/img/kurir/logo_wahana.png';
+    }
+    else if  (kode_ekspedisi == 'Tiki')
+    {
+        logokurir    = 'https://ecs7.tokopedia.net/img/kurir/logo_tiki.png';
+    }
+    else if  (kode_ekspedisi == 'Pos')
+    {
+        logokurir    = 'https://ecs7.tokopedia.net/img/kurir/logo_pos.png';
+    }
+    else if  (kode_ekspedisi == 'First')
+    {
+        logokurir    = 'https://ecs7.tokopedia.net/img/kurir/logo_first.png';
+    }
 
-    var nama_penerima = $('tr#order-' + id + ' td input.dest_receiver_name').val();
-    var alamat_penerima = $('tr#order-' + id + ' td input.dest_receiver_name').val();
-    var telepon_penerima = '';
-    var ekspedisi = $('tr#order-' + id + ' td input.ship_shipping_name').val();
-    var ongkir = $('tr#order-' + id + ' td input.ship_shipping_price').val();
-    var nama_pengirim = $('tr#order-' + id + ' td input.dropship_name').val();
-    var telepon_pengirim = $('tr#order-' + id + ' td input.dropship_telp').val();
-    var alamat_pengirim = $('tr#order-' + id + ' td input.shop_pickup_location').val();
-    var invoice = $('tr#order-' + id + ' td input.order_invoice').val();
-    var administrasi = '';
-    var asuransi = $('tr#order-' + id + ' td input.order_add_price').val();
-    var logo_asuransi = '';
-    var berat = '';
-    var total_harga = $('tr#order-' + id + ' td input.order_open_amt').val();
-    var tipe_pembayaran = $('tr#order-' + id + ' td input.pay_payment_method').val();
+    text += label;
+    text = text.replace('{{logotoko}}', logotoko);
+    text = text.replace('{{kode_booking}}', kode_booking);
+    text = text.replace('{{logokurir}}', logokurir);
+    text = text.replace('{{ekspedisi}}', ekspedisi);
+    text = text.replace('{{invoice}}', invoice);
+    text = text.replace('{{administrasi}}', administrasi);
+    text = text.replace('{{asuransi}}', asuransi);
+    text = text.replace('{{ongkir}}', ongkir);
+    text = text.replace('{{berat}}', berat);
+    text = text.replace('{{nama_penerima}}', nama_penerima);
+    text = text.replace('{{telepon_penerima}}', telepon_penerima);
+    text = text.replace('{{alamat_penerima}}', alamat_penerima);
+    text = text.replace('{{nama_pengirim}}', nama_pengirim);
+    text = text.replace('{{telepon_pengirim}}', telepon_pengirim);
+    text = text.replace('{{alamat_pengirim}}', alamat_pengirim);
+
+    var print_item = '';
 
     $('tr#order-' + id + ' td div.products').each(function ()
     {
+        var label_item = '';
+
         var gambar_produk = $(this).find('input.product_pic').val();
         var nama_produk = $(this).find('input.product_name').val();
         var jumlah_produk = $(this).find('input.product_qty').val();
+            jumlah_produk = jumlah_produk.substr(0, jumlah_produk.indexOf(' ')) + ' buah';
         var keterangan_produk = $(this).find('input.product_notes').val();
         var total_harga_barang = $(this).find('input.product_subtotal').val();
 
+        label_item = item;
+        label_item = label_item.replace('{{jumlah_produk}}', jumlah_produk);
+        label_item = label_item.replace('{{nama_produk}}', nama_produk);
+        label_item = label_item.replace('{{keterangan_produk}}', keterangan_produk);
+
+        print_item += label_item;
+
     });
 
+    text = text.replace('{{foreach_item}}', print_item);
+
+    return text;
+
 
 }
-
-/*
-// Read a page's GET URL variables and return them as an associative array.
-function get_query_string()
-{
-    var vars = [], hash;
-    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-
-    for(var i = 0; i < hashes.length; i++)
-    {
-        hash = hashes[i].split('=');
-        vars.push(hash[0]);
-        vars[hash[0]] = hash[1];
-    }
-
-    return vars;
-}
-*/
