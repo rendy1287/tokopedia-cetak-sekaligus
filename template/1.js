@@ -142,7 +142,7 @@ let css = `
     float: left;
     line-height: 1.5;
   }
-  div.adminongkir, div.penerima, div.pengirim, div.clear, div.item
+  div.kiri, div.adminongkir, div.penerima, div.pengirim, div.clear, div.item
   {
     clear: both;
   }
@@ -173,11 +173,11 @@ let css = `
   div.item
   {
     padding-top: 0px;
-    padding-bottom: 46px;
   }
   div.keterangan
   {
     font-size: 10px;
+    padding-bottom: 10px;
   }
 
 </style>
