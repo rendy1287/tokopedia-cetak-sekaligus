@@ -3,7 +3,7 @@
 // @author       rendy1287
 // @namespace    http://www.github.com/rendy1287
 // @source       https://github.com/rendy1287/tokopedia-cetak-sekaligus
-// @version      0.06
+// @version      0.07
 // @description  Untuk mencetak label alamat pada Tokopedia bagi pengguna Non / Bukan Gold Merchant.
 // @license      MIT License.
 // @icon         https://ecs7.tokopedia.net/img/favicon.ico
@@ -143,7 +143,7 @@ function set_print_label(id)
                            $('tr#order-' + id + ' td input.shop_province').val() + ', ' + $('tr#order-' + id + ' td input.shop_postal').val();
     var invoice          = $('tr#order-' + id + ' td input.order_invoice').val();
     var administrasi     = '+ Rp 0';
-    var asuransi         = ($('tr#order-' + id + ' td input.order_add_price').val() == '' ?
+    var asuransi         = ($('tr#order-' + id + ' td input.order_add_price').val() == 'Rp 0' ?
 							'+ Rp 0' :
 							'<span style="text-decoration: line-through;">+ ' + $('tr#order-' + id + ' td input.order_add_price').val()) + '</span>';
     var logo_asuransi    = '';
