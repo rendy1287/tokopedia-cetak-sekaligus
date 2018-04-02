@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         Tokopedia Cetak Sekaligus Non Gold Merchant
-// @author       Rendi Wahyudi Muliawan
-// @namespace    http://www.tokopedia.com/celleven
+// @author       rendy1287
+// @namespace    http://www.github.com/rendy1287
 // @source       https://github.com/rendy1287/tokopedia-cetak-sekaligus
-// @version      0.05
+// @version      0.06
 // @description  Untuk mencetak label alamat pada Tokopedia bagi pengguna Non / Bukan Gold Merchant.
 // @license      MIT License.
 // @icon         https://ecs7.tokopedia.net/img/favicon.ico
@@ -32,8 +32,8 @@
 //******************************************************************//
 
 const logotoko  = 'https://ecs7.tokopedia.net/img/logo-tokopedia-32.png';
-const ekspedisi = false;
-const invoice   = false;
+const ekspedisi = true;
+const invoice   = true;
 const fontsize  = '12px';
 
 //*****************************************************************//
@@ -142,13 +142,17 @@ function set_print_label(id)
     var alamat_pengirim  = $('tr#order-' + id + ' td input.shop_district').val() + ', ' +
                            $('tr#order-' + id + ' td input.shop_province').val() + ', ' + $('tr#order-' + id + ' td input.shop_postal').val();
     var invoice          = $('tr#order-' + id + ' td input.order_invoice').val();
-    var administrasi     = '';
-    var asuransi         = $('tr#order-' + id + ' td input.order_add_price').val();
+    var administrasi     = '+ Rp 0';
+    var asuransi         = ($('tr#order-' + id + ' td input.order_add_price').val() == '' ?
+							'+ Rp 0' :
+							'<span style="text-decoration: line-through;">+ ' + $('tr#order-' + id + ' td input.order_add_price').val()) + '</span>';
     var logo_asuransi    = '';
     var berat            = /\(.*\)/.exec($('tr#order-' + id + ' td input.order_product_qty').val());
         berat            = berat.toString().replace('(', '').replace(')', '');
     var total_harga      = $('tr#order-' + id + ' td input.order_open_amt').val();
-    var tipe_pembayaran  = $('tr#order-' + id + ' td input.pay_payment_method').val();
+    var insurance_type  = $('tr#order-' + id + ' td input.insurance_type').val();
+	var insurance_note  = $('tr#order-' + id + ' td input.insurance_note').val();
+	var additional_fee  = $('tr#order-' + id + ' td input.additional_fee').val();
     var kode_booking     = '';
 
     if (kode_ekspedisi == 'JNE')
